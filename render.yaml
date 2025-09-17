@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: login-ejs-app
+    env: node
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    repo: https://github.com/ajay-kumar-05k4/LOGIN_EJS

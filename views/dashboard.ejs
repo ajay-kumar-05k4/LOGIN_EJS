@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Ejsex</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,160 +12,498 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #f59e0b;
+            --accent-color: #10b981;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
+            animation: backgroundFloat 25s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(0.5deg); }
+            66% { transform: translateY(5px) rotate(-0.5deg); }
         }
         
         .dashboard-container {
-            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
+            position: relative;
+            z-index: 1;
         }
         
+        /* Header Section */
         .dashboard-header {
-            margin-bottom: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-color), #059669);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .welcome-badge::before {
+            content: '🎉';
+            font-size: 1rem;
         }
         
         .dashboard-header h1 {
-            color: #333;
-            font-size: 2.5rem;
+            color: var(--text-primary);
+            font-size: 3rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .dashboard-header p {
-            color: #666;
-            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            font-weight: 400;
         }
         
+        /* User Info Card */
         .user-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
         
-        .user-info h2 {
-            font-size: 1.5rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .user-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+        }
+        
+        .user-info-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .user-details h2 {
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
         
-        .user-info p {
-            font-size: 1rem;
+        .user-details p {
+            font-size: 1.125rem;
             opacity: 0.9;
+            font-weight: 400;
         }
         
-        .dashboard-content {
+        /* Stats Grid */
+        .stats-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.875rem;
+            font-weight: 700;
             margin-bottom: 2rem;
-        }
-        
-        .dashboard-content h3 {
-            color: #333;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            text-align: center;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin-bottom: 2rem;
         }
         
         .stat-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeInUp 0.8s ease-out both;
+            box-shadow: var(--shadow-sm);
         }
         
-        .stat-card h4 {
-            color: #333;
-            font-size: 1.1rem;
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .stat-card:nth-child(1) .stat-icon { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .stat-card:nth-child(2) .stat-icon { background: linear-gradient(135deg, #10b981, #059669); }
+        .stat-card:nth-child(3) .stat-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .stat-card:nth-child(4) .stat-icon { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        
+        .stat-value {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }
         
-        .stat-card p {
-            color: #666;
-            font-size: 0.9rem;
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
         }
         
-        .logout-btn {
-            background: #dc3545;
-            color: white;
-            padding: 0.75rem 2rem;
+        /* Action Buttons */
+        .actions-section {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
         
-        .logout-btn:hover {
-            background: #c82333;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow-md);
         }
         
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+            
+            .user-info {
+                padding: 1.5rem;
+            }
+            
+            .user-info-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .stat-card {
+                padding: 1.5rem;
+            }
+            
+            .actions-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        /* Success Message */
         .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid #a7f3d0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            animation: fadeInDown 0.8s ease-out 0.1s both;
+        }
+        
+        .success-message::before {
+            content: '✅';
+            font-size: 1.25rem;
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <div class="dashboard-header">
+            <div class="welcome-badge">Login Successful</div>
             <h1>Dashboard</h1>
-            <p>Welcome to your personal dashboard</p>
+            <p>Welcome to your personal workspace</p>
         </div>
         
         <div class="success-message">
-            ✅ Login successful! You are now logged in.
+            Login successful! You are now logged in.
         </div>
         
         <div class="user-info">
-            <h2>Hello, <%= user %>!</h2>
-            <p>You have successfully accessed your dashboard.</p>
-        </div>
-        
-        <div class="dashboard-content">
-            <h3>Your Statistics</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h4>Profile Views</h4>
-                    <p>1,234</p>
+            <div class="user-info-content">
+                <div class="user-avatar">
+                    <%= user.charAt(0).toUpperCase() %>
                 </div>
-                <div class="stat-card">
-                    <h4>Messages</h4>
-                    <p>56</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Notifications</h4>
-                    <p>12</p>
-                </div>
-                <div class="stat-card">
-                    <h4>Last Login</h4>
-                    <p>Just now</p>
+                <div class="user-details">
+                    <h2>Hello, <%= user %>!</h2>
+                    <p>Welcome back to your dashboard. You have successfully accessed your account.</p>
                 </div>
             </div>
         </div>
         
-        <a href="/login" class="logout-btn">Logout</a>
+        <div class="stats-section">
+            <h2 class="section-title">Your Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">👁️</div>
+                    </div>
+                    <div class="stat-value">1,234</div>
+                    <div class="stat-label">Profile Views</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">💬</div>
+                    </div>
+                    <div class="stat-value">56</div>
+                    <div class="stat-label">Messages</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">🔔</div>
+                    </div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Notifications</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">⏰</div>
+                    </div>
+                    <div class="stat-value">Now</div>
+                    <div class="stat-label">Last Login</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions-section">
+            <a href="#" class="btn btn-primary">
+                <span>⚙️</span>
+                Settings
+            </a>
+            <a href="#" class="btn btn-secondary">
+                <span>📊</span>
+                Analytics
+            </a>
+            <a href="/login" class="btn btn-danger">
+                <span>🚪</span>
+                Logout
+            </a>
+        </div>
     </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stat values
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues.forEach((stat, index) => {
+                const finalValue = stat.textContent;
+                if (!isNaN(finalValue.replace(',', ''))) {
+                    let currentValue = 0;
+                    const increment = finalValue.replace(',', '') / 50;
+                    const timer = setInterval(() => {
+                        currentValue += increment;
+                        if (currentValue >= finalValue.replace(',', '')) {
+                            stat.textContent = finalValue;
+                            clearInterval(timer);
+                        } else {
+                            stat.textContent = Math.floor(currentValue).toLocaleString();
+                        }
+                    }, 30);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
